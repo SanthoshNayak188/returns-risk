@@ -1,6 +1,7 @@
 # Predicting product line returns in online retail (UCI Online Retail II)
 
-ES 678 individual project. Phase 1: warehouse, data audit and return label, with the go / no-go gate check.
+ES 678 individual project. Author: Santhosh Lakavath, roll number 26210073, IIT Gandhinagar.
+The data (UCI Online Retail II, CC BY 4.0) is not included; download it as described below.
 
 ## Phase 1 (do this first, it takes minutes)
 1. `python -m venv venv`, activate it, then `pip install -r requirements.txt`.
