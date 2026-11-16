@@ -18,8 +18,9 @@ def load_for_matching(conn):
     for d in (sales, credits): d["t"] = _secs(d["ts"])
     return sales, credits
 
-def fifo_match(sales, credits, window_days=90):
+def fifo_match(sales, credits, window_days=90, rule="fifo"):
     """sales: line_key, customer_key, product_key, t (seconds), qty.  credits: credit_key, customer_key, product_key, t, qty (positive).
+    rule "fifo" assigns a credit to the OLDEST eligible purchase first, "lifo" to the MOST RECENT one first (used only for the sensitivity analysis).
     Returns one row per (sale line, credit line) pair: matched quantity and days between purchase and credit."""
     win = window_days * DAY
     pairs = pd.MultiIndex.from_frame(credits[["customer_key", "product_key"]].drop_duplicates())          # only these pairs can ever match
@@ -34,7 +35,7 @@ def fifo_match(sales, credits, window_days=90):
         t_arr, left, keys = g
         lo = int(np.searchsorted(t_arr, r.t - win, side="left")); hi = int(np.searchsorted(t_arr, r.t, side="left"))
         need = int(r.qty)
-        for i in range(lo, hi):
+        for i in (range(lo, hi) if rule == "fifo" else range(hi - 1, lo - 1, -1)):
             if left[i] <= 0: continue
             take = min(int(left[i]), need); left[i] -= take; need -= take
             out.append((int(keys[i]), int(r.credit_key), take, int((r.t - t_arr[i]) // DAY)))
@@ -67,9 +68,9 @@ def conservation_violations(conn):
                         JOIN fact_sales_line s ON s.line_key = b.sales_line_key WHERE b.m > s.quantity""").fetchone()[0]
     return int(a + b)
 
-def run_matching(conn, window_days):
+def run_matching(conn, window_days, rule="fifo"):
     sales, credits = load_for_matching(conn)
-    matches = fifo_match(sales, credits, window_days)
+    matches = fifo_match(sales, credits, window_days, rule)
     write_bridge(conn, matches); create_label_view(conn, window_days)
     return matches, len(credits)
 

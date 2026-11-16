@@ -22,3 +22,13 @@ calibrate:
 	python src/calibrate.py
 final:
 	python src/final.py --boot 1000
+ablation:
+	python src/analyses.py ablation
+labels:
+	python src/analyses.py labels
+audit:
+	python src/analyses.py audit
+drift:
+	python src/analyses.py drift
+figures:
+	python src/make_figures.py

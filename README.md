@@ -38,3 +38,8 @@ The five-feature logistic regression stays a baseline. The test period is not us
 14. `python src/calibrate.py` compares three corrections of the inflated probabilities (analytic, Platt, isotonic) with forward chaining on the development folds and applies the rule.
 15. Freeze: commit `config.yaml`, `decision_log.md` and `artifacts/*.json` and tag the commit `freeze-before-test`.
 16. `python src/final.py --boot 1000` fits everything on the development period, scores the test period ONCE and writes the results, the saved model and a lock file. It refuses to run if a decision file is missing or the lock exists.
+
+## Phase 3: graduate analyses and figures
+17. `python src/analyses.py ablation` and `python src/analyses.py labels` (development folds only) and, after the test run, `python src/analyses.py audit` and `python src/analyses.py drift`.
+18. `python src/make_figures.py` draws the three paper figures into `paper/figures/` from the saved results.
+Run `final.py` BEFORE unpacking this phase, so that the code that scores the test period is exactly the frozen commit (`git status` shows no changes).

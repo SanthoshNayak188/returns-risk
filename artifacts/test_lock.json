@@ -1,0 +1,8 @@
+{
+  "scored_at": "2026-11-16T13:09:50",
+  "chosen": "logistic",
+  "calibration": "analytic",
+  "test_lines": 141306,
+  "test_positives": 2938,
+  "config_sha256": "1c57b1dfa9b3900e50a11ed5e692316787829193ea7b01b6869ec75afe4d5892"
+}

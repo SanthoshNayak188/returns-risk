@@ -48,3 +48,9 @@ def test_label_view_marks_recent_lines_as_not_final(fake):
     late = conn.execute("SELECT MAX(is_final) FROM v_label WHERE invoice_ts >= '2011-09-15'").fetchone()[0]
     early = conn.execute("SELECT MIN(is_final) FROM v_label WHERE invoice_ts < '2011-08-01'").fetchone()[0]
     assert late == 0 and early == 1
+
+def test_lifo_assigns_the_most_recent_purchase_first_and_conserves_quantity():
+    s, c = tiny(); m = M.fifo_match(s, c, 90, rule="lifo")
+    assert list(m.sales_line_key) == [2, 1] and list(m.matched_qty) == [4, 3] and list(m.days_to_return) == [10, 19]
+    got = m.groupby("credit_line_key").matched_qty.sum(); assert (got <= c.set_index("credit_key").qty.loc[got.index]).all()
+    assert M.fifo_match(s, c, 90, rule="fifo").matched_qty.sum() == m.matched_qty.sum()          # same quantity matched, different lines
