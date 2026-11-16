@@ -1,8 +1,7 @@
 # Predicting product line returns in online retail (UCI Online Retail II)
 
 ES 678 individual project. Author: Santhosh Lakavath, roll number 26210073, IIT Gandhinagar.
-The data (UCI Online Retail II, CC BY 4.0) is not included; download it as described below.
-
+Data: UCI Online Retail II (CC BY 4.0), about 1.07 million transaction lines from December 2009 to December 2011. The data is not included in this repository. To reproduce, download "Online Retail II" from the UCI Machine Learning Repository, unzip it, rename the file to online_retail_II.xlsx if it has another extension, and place it in data/raw/. Then follow the steps below.
 ## Phase 1 (do this first, it takes minutes)
 1. `python -m venv venv`, activate it, then `pip install -r requirements.txt`.
 2. Download Online Retail II from the UCI repository (search "Online Retail II UCI"). It is free, needs no login, and the licence is CC BY 4.0.
