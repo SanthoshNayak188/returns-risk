@@ -1,0 +1,42 @@
+# All dates and numbers that matter live here. Commit this file BEFORE comparing any model.
+seed: 42
+data:
+  raw_path: data/raw/online_retail_II.xlsx      # the UCI download; a CSV with the same columns also works
+  interim_csv: data/interim/online_retail_II.csv # cache written on the first read (reading the Excel file is slow)
+  db_path: warehouse/retail.db
+  expected_rows: 1067371
+label:
+  window_days: 90                # a credit note within this many days of a purchase by the same customer, same product, counts as a return
+  maturity_lag_days: 90          # a purchase's outcome is only known this many days later; history features use only older purchases
+  windows_to_compare: [60, 90, 120, 180]
+  min_dev_positives: 3000        # Gate 2
+  min_test_positives: 800        # Gate 2
+  min_matched_credit_line_share: 0.5   # Gate 1
+  min_share_within_window: 0.9         # Gate 1: of matches found with the longest window, this share lies inside window_days
+split:
+  dev_start: "2009-12-01"
+  dev_end: "2010-12-31"
+  embargo_days: 90
+  test_start: "2011-04-01"
+  test_end: "2011-09-10"         # data ends 2011-12-09; later purchases have an incomplete 90 day window
+# Rows with these stock codes are not product purchases (postage, fees, manual entries). The audit prints the most frequent
+# other non-numeric codes so you can extend this list, and every addition goes in decision_log.md.
+non_product_codes: [POST, D, M, BANK CHARGES, AMAZONFEE, DOT, CRUK, S, B, ADJUST, ADJUST2, C2, PADS, TEST001, TEST002]
+non_product_prefixes: [gift_]
+features:
+  shrinkage_m: 20                # a customer or product with few past lines is pulled toward the global mature return rate
+  recent_days: 90                # window for recent units sold of a product
+  countries: [United Kingdom, EIRE, Germany, France, Netherlands]   # everything else is "other"
+cv:
+  folds:                         # validation purchases; training purchases end embargo_days before each block starts
+    - {name: V1, val_start: "2010-06-01", val_end: "2010-07-31"}
+    - {name: V2, val_start: "2010-08-01", val_end: "2010-09-30"}
+    - {name: V3, val_start: "2010-10-01", val_end: "2010-11-30"}
+    - {name: V4, val_start: "2010-12-01", val_end: "2010-12-31"}
+eval:
+  top_k: [0.02, 0.05]
+  bootstrap_B: 1000
+  cluster: customer_key
+  model_seeds: [1, 2, 3, 4, 5]
+imbalance:
+  undersample_negatives_per_positive: 5

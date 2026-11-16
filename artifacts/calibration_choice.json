@@ -1,0 +1,11 @@
+{
+  "method": "analytic",
+  "model": "logistic",
+  "strategy": "undersample",
+  "odds_factors_by_fold": {
+    "V1": 0.10887573964497041,
+    "V2": 0.11115879182100159,
+    "V3": 0.10590719920491956,
+    "V4": 0.10529019003595275
+  }
+}

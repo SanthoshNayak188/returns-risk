@@ -1,0 +1,11 @@
+data/raw/*
+data/interim/
+data/processed/
+warehouse/*.db
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.ipynb_checkpoints
+kaggle.json
+.env

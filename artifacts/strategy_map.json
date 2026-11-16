@@ -1,0 +1,4 @@
+{
+  "logistic": "undersample",
+  "lightgbm": "undersample"
+}

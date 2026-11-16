@@ -1,0 +1,14 @@
+{
+  "logistic": {
+    "C": 0.005343227125594123
+  },
+  "lightgbm": {
+    "n_estimators": 107,
+    "learning_rate": 0.02029364173901197,
+    "num_leaves": 17,
+    "min_child_samples": 50,
+    "subsample": 0.5474899068779059,
+    "colsample_bytree": 0.8182978786194709,
+    "reg_lambda": 0.011241628216570305
+  }
+}

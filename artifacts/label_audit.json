@@ -1,0 +1,10 @@
+{
+  "window_days": 90,
+  "matched_credit_line_share": 0.8223387051803936,
+  "share_of_matches_within_window": 0.9165201083834272,
+  "positives_dev": 8249,
+  "positives_test": 2938,
+  "gate1_passed": true,
+  "gate2_passed": true,
+  "recommendation": "Both gates pass with a 90 day window. Continue with the plan."
+}
