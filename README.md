@@ -44,3 +44,15 @@ The five-feature logistic regression stays a baseline. The test period is not us
 17. `python src/analyses.py ablation` and `python src/analyses.py labels` (development folds only) and, after the test run, `python src/analyses.py audit` and `python src/analyses.py drift`.
 18. `python src/make_figures.py` draws the three paper figures into `paper/figures/` from the saved results.
 Run `final.py` BEFORE unpacking this phase, so that the code that scores the test period is exactly the frozen commit (`git status` shows no changes).
+
+## AI-use disclosure
+
+I used Claude (Anthropic) to plan the project, write and test the Python code (warehouse, label matching, features, models, evaluation, analyses and figures) and draft the paper. I downloaded the dataset and ran the data audit, the cleaning, all experiments and the evaluation myself in Google Colab, and every number in the paper comes from those outputs.
+
+## Citations
+
+Dataset: Online Retail II, UCI Machine Learning Repository, 2019 (CC BY 4.0). Libraries listed in requirements.txt: pandas, NumPy, SciPy, scikit-learn, LightGBM, Optuna, Matplotlib. Methods cited in the paper: Saito and Rehmsmeier 2015, Dal Pozzolo et al. 2015, Niculescu-Mizil and Caruana 2005.
+
+## Notes
+
+The artifacts folder holds small derived tables; label_audit_samples.csv and audit_errors.csv contain a few dozen example rows from the public dataset (CC BY 4.0), shown to document the label checks. The full data is not included.
