@@ -7,7 +7,7 @@ Note:  The first two commits if  shows the Git author name "Malla Jeevan Kumar" 
 1. `python -m venv venv`, activate it, then `pip install -r requirements.txt`.
 2. Download Online Retail II from the UCI repository (search "Online Retail II UCI"). It is free, needs no login, and the licence is CC BY 4.0.
    Unzip it and put `online_retail_II.xlsx` in `data/raw/` (or a CSV with the same columns; change `raw_path` in `config.yaml`).
-3. `python -m pytest -q tests` should show `22 passed` (the tests use generated data, not the real file).
+3. `python -m pytest -q tests` should show `64 passed` (the tests use generated data, not the real file).
 4. `python src/audit.py` and write one line in `decision_log.md` for every issue found. The first run reads the Excel file, which takes several
    minutes, and caches it as `data/interim/online_retail_II.csv`.
 5. `python src/etl.py --fresh` builds the star schema, loads 30 trading days one at a time, then the rest, and checks every batch.
